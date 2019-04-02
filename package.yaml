@@ -28,9 +28,19 @@ library:
   source-dirs: src
 
 executables:
-  csvdo:
+  mrgcsv:
     main:                Main.hs
-    source-dirs:         app
+    source-dirs:         mrgapp
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - CSVprocessing
+
+  updcsv:
+    main:                Main.hs
+    source-dirs:         updapp
     ghc-options:
     - -threaded
     - -rtsopts

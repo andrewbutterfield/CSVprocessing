@@ -3,4 +3,5 @@ module Main where
 import CSVFiles
 
 main :: IO ()
-main = someFunc
+main = do putStrLn "upd!"
+          someFunc
