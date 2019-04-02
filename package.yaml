@@ -21,12 +21,14 @@ description:         Please see the README on GitHub at <https://github.com/andr
 
 dependencies:
 - base >= 4.7 && < 5
+- csv
+- containers
 
 library:
   source-dirs: src
 
 executables:
-  CSVprocessing-exe:
+  csvdo:
     main:                Main.hs
     source-dirs:         app
     ghc-options:
