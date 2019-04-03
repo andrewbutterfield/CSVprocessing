@@ -1,4 +1,4 @@
-module CSVFiles(
+module CSVMaps(
   CSVMap
 , keyCSV
 ) where

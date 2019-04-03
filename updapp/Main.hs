@@ -1,6 +1,10 @@
 module Main where
 
-import CSVFiles
+import System.Environment
+import Text.CSV
+import CSVMaps
 
 main :: IO ()
-main = putStrLn "upd!"
+main
+  = do  args <- getArgs
+        putStrLn ("upd "++show args)
