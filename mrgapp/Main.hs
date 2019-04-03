@@ -12,10 +12,10 @@ main
       (file1,key1,file2,key2) <- processArgs args
       putStrLn (unwords [file1,key1,file2,key2])
       csv1 <- readCSV file1
-      csvmap1 <- keyCSV key1 csv1
+      (len1,csvmap1) <- keyCSV key1 csv1
       putStrLn ("CSVMap1:\n" ++ show csvmap1)
       csv2 <- readCSV file2
-      csvmap2 <- keyCSV key2 csv2
+      (len2,csvmap2) <- keyCSV key2 csv2
       putStrLn ("CSVMap2:\n" ++ show csvmap2)
 
 processArgs ["-h"]                   =  help

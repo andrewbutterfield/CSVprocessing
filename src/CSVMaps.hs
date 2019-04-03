@@ -24,23 +24,23 @@ getKey _ []      =  fail "getKey: record too short"
 getKey 0 (f:_)   =  return f
 getKey i (_:fs)  =  getKey (i-1) fs
 
-mkMap :: Monad m => Int -> CSV -> m CSVMap
-mkMap i csv
-  = mm i M.empty csv
+mkMap :: Monad m => Int -> Int -> CSV -> m (Int,CSVMap)
+mkMap len i csv
+  = mm M.empty csv
   where
-    mm _ csvm []      =  return csvm
-    mm i csvm [[]]    =  return csvm
-    mm i csvm [[""]]  =  return csvm
-    mm i csvm (r:rs)
+    mm csvm []      =  return (len,csvm)
+    mm csvm [[]]    =  return (len,csvm)
+    mm csvm [[""]]  =  return (len,csvm)
+    mm csvm (r:rs)
       = do f <- getKey i r
            let csvm' = M.insert f r csvm
-           mm i csvm' rs
+           mm csvm' rs
 
-keyCSV :: Monad m => Field -> CSV -> m CSVMap
+keyCSV :: Monad m => Field -> CSV -> m (Int,CSVMap)
 keyCSV _ [] = fail "keyCSV: empty CSV"
 keyCSV key (hdr:body)
   = do keyIndex <- findKey key hdr
-       mkMap keyIndex body
+       mkMap (length hdr) keyIndex body
 
 someFunc :: IO ()
 someFunc = putStrLn "someFunc"
