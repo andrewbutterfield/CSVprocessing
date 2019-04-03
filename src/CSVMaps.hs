@@ -1,6 +1,7 @@
 module CSVMaps(
   CSVMap
 , keyCSV
+, unKeyMap
 ) where
 
 import Text.CSV
@@ -24,23 +25,23 @@ getKey _ []      =  fail "getKey: record too short"
 getKey 0 (f:_)   =  return f
 getKey i (_:fs)  =  getKey (i-1) fs
 
-mkMap :: Monad m => Int -> Int -> CSV -> m (Int,CSVMap)
-mkMap len i csv
+mkMap :: Monad m => Record -> Int -> CSV -> m (Record,CSVMap)
+mkMap hdr i csv
   = mm M.empty csv
   where
-    mm csvm []      =  return (len,csvm)
-    mm csvm [[]]    =  return (len,csvm)
-    mm csvm [[""]]  =  return (len,csvm)
+    mm csvm []      =  return (hdr,csvm)
+    mm csvm [[]]    =  return (hdr,csvm)
+    mm csvm [[""]]  =  return (hdr,csvm)
     mm csvm (r:rs)
       = do f <- getKey i r
            let csvm' = M.insert f r csvm
            mm csvm' rs
 
-keyCSV :: Monad m => Field -> CSV -> m (Int,CSVMap)
+keyCSV :: Monad m => Field -> CSV -> m (Record,CSVMap)
 keyCSV _ [] = fail "keyCSV: empty CSV"
 keyCSV key (hdr:body)
   = do keyIndex <- findKey key hdr
-       mkMap (length hdr) keyIndex body
+       mkMap hdr keyIndex body
 
-someFunc :: IO ()
-someFunc = putStrLn "someFunc"
+unKeyMap :: CSVMap -> CSV
+unKeyMap = M.elems
