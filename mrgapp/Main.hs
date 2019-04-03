@@ -13,17 +13,17 @@ import CSVFiles
 main :: IO ()
 main
  = do args <- getArgs
-      putStrLn ("mrg "++show args)
+      --putStrLn ("mrg "++show args)
       (file1,key1,file2,key2) <- processArgs args
-      putStrLn (unwords [file1,key1,file2,key2])
+      --putStrLn (unwords [file1,key1,file2,key2])
       csv1 <- readCSV file1
       m1@(hdr1,csvmap1) <- keyCSV key1 csv1
-      putStrLn ("CSVMap1:\n" ++ show csvmap1)
+      --putStrLn ("CSVMap1:\n" ++ show csvmap1)
       csv2 <- readCSV file2
       m2@(hdr2,csvmap2) <- keyCSV key2 csv2
-      putStrLn ("CSVMap2:\n" ++ show csvmap2)
+      --putStrLn ("CSVMap2:\n" ++ show csvmap2)
       outmap <- merge m1 m2
-      putStrLn ("Merge:\n" ++ show outmap)
+      --putStrLn ("Merge:\n" ++ show outmap)
       let outCSV = (hdr1++hdr2) : unKeyMap outmap
       putStrLn $ printCSV outCSV
 
