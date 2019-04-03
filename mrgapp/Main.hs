@@ -12,11 +12,13 @@ main
       (file1,key1,file2,key2) <- processArgs args
       putStrLn (unwords [file1,key1,file2,key2])
       csv1 <- readCSV file1
-      (len1,csvmap1) <- keyCSV key1 csv1
+      m1@(len1,csvmap1) <- keyCSV key1 csv1
       putStrLn ("CSVMap1:\n" ++ show csvmap1)
       csv2 <- readCSV file2
-      (len2,csvmap2) <- keyCSV key2 csv2
+      m2@(len2,csvmap2) <- keyCSV key2 csv2
       putStrLn ("CSVMap2:\n" ++ show csvmap2)
+      outmap <- merge m1 m2
+      putStrLn ("Merge:\n" ++ show outmap)
 
 processArgs ["-h"]                   =  help
 processArgs ["--help"]               =  help
@@ -42,3 +44,7 @@ forceCSV filename
    else if '.' `elem` filename
         then fail ("file '"++filename++"' has non .csv extension")
         else return (filename++".csv")
+
+merge :: Monad m => (Int,CSVMap) -> (Int,CSVMap) -> m CSVMap
+merge (len1,map1) (len2,map2)
+ = fail "merge NYI"
