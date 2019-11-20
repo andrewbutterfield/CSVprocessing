@@ -7,4 +7,4 @@ import CSVMaps
 main :: IO ()
 main
   = do  args <- getArgs
-        putStrLn ("upd "++show args)
+        putStrLn ("upd "++show args++" N.Y.I.")
